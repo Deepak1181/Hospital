@@ -1,42 +1,55 @@
-import appointment_img from './appointment_img.png'
-import header_img from './header_img.png'
-import group_profiles from './group_profiles.png'
-import profile_pic from './profile_pic.png'
-import contact_image from './contact_image.png'
-import about_image from './about_image.png'
-import logo from './logo.svg'
-import dropdown_icon from './dropdown_icon.svg'
-import menu_icon from './menu_icon.svg'
-import cross_icon from './cross_icon.png'
-import chats_icon from './chats_icon.svg'
-import verified_icon from './verified_icon.svg'
-import arrow_icon from './arrow_icon.svg'
-import info_icon from './info_icon.svg'
-import upload_icon from './upload_icon.png'
-import stripe_logo from './stripe_logo.png'
-import razorpay_logo from './razorpay_logo.png'
-import doc1 from './doc1.png'
-import doc2 from './doc2.png'
-import doc3 from './doc3.png'
-import doc4 from './doc4.png'
-import doc5 from './doc5.png'
-import doc6 from './doc6.png'
-import doc7 from './doc7.png'
-import doc8 from './doc8.png'
-import doc9 from './doc9.png'
-import doc10 from './doc10.png'
-import doc11 from './doc11.png'
-import doc12 from './doc12.png'
-import doc13 from './doc13.png'
-import doc14 from './doc14.png'
-import doc15 from './doc15.png'
-import Dermatologist from './Dermatologist.svg'
-import Gastroenterologist from './Gastroenterologist.svg'
-import General_physician from './General_physician.svg'
-import Gynecologist from './Gynecologist.svg'
-import Neurologist from './Neurologist.svg'
-import Pediatricians from './Pediatricians.svg'
-
+import appointment_img from '../assets_frontend/appointment_img.png'
+import header_img from '../assets_frontend/header_img.png'
+import group_profiles from '../assets_frontend/group_profiles.png'
+import profile_pic from '../assets_frontend/profile_pic.png'
+import contact_image from '../assets_frontend/contact_image.png'
+import about_image from '../assets_frontend/about_image.png'
+import logo from '../assets_frontend/logo.svg'
+import dropdown_icon from '../assets_frontend/dropdown_icon.svg'
+import menu_icon from '../assets_frontend/menu_icon.svg'
+import cross_icon from '../assets_frontend/cross_icon.png'
+import chats_icon from '../assets_frontend/chats_icon.svg'
+import verified_icon from '../assets_frontend/verified_icon.svg'
+import arrow_icon from '../assets_frontend/arrow_icon.svg'
+import info_icon from '../assets_frontend/info_icon.svg'
+import upload_icon from '../assets_frontend/upload_icon.png'
+import stripe_logo from '../assets_frontend/stripe_logo.png'
+import razorpay_logo from '../assets_frontend/razorpay_logo.png'
+import doc1 from '../assets_frontend/doc1.png'
+import doc2 from '../assets_frontend/doc2.png'
+import doc3 from '../assets_frontend/doc3.png'
+import doc4 from '../assets_frontend/doc4.png'
+import doc5 from '../assets_frontend/doc5.png'
+import doc6 from '../assets_frontend/doc6.png'
+import doc7 from '../assets_frontend/doc7.png'
+import doc8 from '../assets_frontend/doc8.png'
+import doc9 from '../assets_frontend/doc9.png'
+import doc10 from '../assets_frontend/doc10.png'
+import doc11 from '../assets_frontend/doc11.png'
+import doc12 from '../assets_frontend/doc12.png'
+import doc13 from '../assets_frontend/doc13.png'
+import doc14 from '../assets_frontend/doc14.png'
+import doc15 from '../assets_frontend/doc15.png'
+import Dermatologist from '../assets_frontend/Dermatologist.svg'
+import Gastroenterologist from '../assets_frontend/Gastroenterologist.svg'
+import General_physician from '../assets_frontend/General_physician.svg'
+import Gynecologist from '../assets_frontend/Gynecologist.svg'
+import Neurologist from '../assets_frontend/Neurologist.svg'
+import Pediatricians from '../assets_frontend/Pediatricians.svg'
+import add_icon from './add_icon.svg'
+import admin_logo from './admin_logo.svg'
+import appointment_icon from './appointment_icon.svg'
+import appointments_icon from './appointments_icon.svg'
+import cancel_icon from './cancel_icon.svg'
+import doctor_icon from './doctor_icon.svg'
+import earning_icon from './earning_icon.svg'
+import home_icon from './home_icon.svg'
+import list_icon from './list_icon.svg'
+import patient_icon from './patient_icon.svg'
+import patients_icon from './patients_icon.svg'
+import people_icon from './people_icon.svg'
+import tick_icon from './tick_icon.svg'
+import upload_area from './upload_area.svg'
 
 export const assets = {
     appointment_img,
@@ -55,7 +68,21 @@ export const assets = {
     dropdown_icon,
     upload_icon,
     stripe_logo,
-    razorpay_logo
+    razorpay_logo,
+    add_icon,
+    admin_logo,
+    appointment_icon,
+    appointments_icon,
+    cancel_icon,
+    doctor_icon,
+    earning_icon,
+    home_icon,
+    list_icon,
+    patient_icon,
+    patients_icon,
+    people_icon,
+    tick_icon,
+    upload_area
 }
 
 export const specialityData = [

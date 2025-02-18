@@ -2,17 +2,22 @@ import React, { useState } from "react";
 import logo from "../pres_Scripto/assets/assets_frontend/logo.svg";
 // import Profile from '../pres_Scripto/assets/assets_frontend/profile_pic'
 import Profile from "../pres_Scripto/assets/assets_frontend/profile_pic.png";
+import menu from "../pres_Scripto/assets/assets_frontend/menu_icon.svg";
+import crossIcon from "../pres_Scripto/assets/assets_frontend/cross_icon.png";
+
+
 import Dropdown from "../pres_Scripto/assets/assets_frontend/dropdown_icon.svg";
 import { NavLink, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const navigate = useNavigate();
+
   const [showMenu, setShowMenu] = useState(false);
   const [token, setToken] = useState(true);
 
   return (
     <div className="flex items-center cursor-pointer justify-between text-sm py-4 mb-5 border-b border-b-gray-400">
-      <img className="w-44 border" src={logo} alt="Logo" />
+      <img onClick={()=>navigate("/")} className="w-44 " src={logo} alt="Logo" />
       <ul className="hidden md:flex items-start gap-5 font-medium">
         <NavLink to="/">
           <li className="py-1">Home</li>
@@ -51,7 +56,21 @@ const Navbar = () => {
             className="bg-primary text-white px-8 py-3 rounded-full font-light hidden md:block  ">  Create Account</button>
         )}
         {/* <button onClick={()=>navigate("/login")}  className='bg-primary text-white px-8 py-3 rounded-full font-light hidden md:block  '> */}
+   <img onClick={()=>setShowMenu(true)} className="w-6 md:hidden" src={menu} alt="" />
+   {/* mobile menu */}
+   <div className={` ${ showMenu? "fixed w-full" :"h-0 w-0"} md:hidden right-0 top-0 bottom-0 z-20 overflow-hidden bg-white transition-all`}>
+    <div className="flex items-center justify-between px-5 py-6">
+      <img className="w-36" src={logo} alt="" srcset="" />
+      <img  className="w-7" onClick={()=>setShowMenu(false)} src={crossIcon} alt="" srcset="" />
 
+    </div>
+    <ul className="flex flex-col items-center gap-2 mt-5 px-5 text-lg font-medium">
+      <NavLink   to="/"><p className={"px-4 py-2 rounded full inline-block"} onClick={()=>setShowMenu(false)} >Home</p></NavLink>
+      <NavLink to="/doctors"><p className={"px-4 py-2 rounded full inline-block"} onClick={()=>setShowMenu(false)}>All Doctors</p></NavLink>
+      <NavLink to="/about"> <p className={"px-4 py-2 rounded full inline-block"} onClick={()=>setShowMenu(false)}>About</p></NavLink>
+      <NavLink to="/contact"> <p className={"px-4 py-2 rounded full inline-block"} onClick={()=>setShowMenu(false)}>Contact</p></NavLink>
+    </ul>
+   </div>
       </div>
     </div>
   );
