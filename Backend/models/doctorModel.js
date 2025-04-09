@@ -30,9 +30,14 @@ const doctorSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    about: {
-      type: Boolean,
-      available: true,
+    about: { type: String, required: true },
+    // about: {
+    //   type: Boolean,
+    //   available: true,
+    // },
+    available:{
+        type:Boolean,
+        default:true
     },
     fees: {
       type: Number,
@@ -40,7 +45,7 @@ const doctorSchema = new mongoose.Schema(
     },
     address: {
       type: Object,
-      required: true,
+      default: true,
     },
     date: {
       type: Number,
@@ -62,3 +67,17 @@ const doctorSchema = new mongoose.Schema(
 const doctorModel = mongoose.models.doctor || mongoose.model('doctor', doctorSchema)
 
 export default  doctorModel
+
+
+
+
+
+
+
+
+
+
+
+
+
+
