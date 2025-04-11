@@ -52,7 +52,7 @@ const logout =() =>{
             <div className="absolute top-0 right-0 pt-14 text-base font-medium text-gray-600 z-20 p-4  hidden group-hover:block">
               <div className="min-w-48 bg-stone-100 rounded flex flex-col gap-4 p-4">
                 <p className="hover:text-black cursor-pointer" onClick={()=>navigate("my-profile ")}>My Profile</p>
-                <p className="hover:text-black cursor-pointer" onClick={()=>navigate("my-appointment")}>My Appointment</p>
+                <p className="hover:text-black cursor-pointer" onClick={()=>navigate("my-appointments")}>My Appointment</p>
                 <p className="hover:text-black cursor-pointer" onClick={logout}>Logout</p>
               </div>
             </div>

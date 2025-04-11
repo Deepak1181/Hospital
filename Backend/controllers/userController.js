@@ -281,67 +281,107 @@ const bookAppointment = async (req, res) => {
     }
 };
 
-// const bookAppointment = async (req, res) => {
+
+// list of appointment that user bookeds my-appointment page 
+
+// const listAppointments = async (req, res) => {
 //     try {
-//         const { docId, slotDate, slotTime, userId } = req.body;
-
-//         const docData = await doctorModel.findById(docId).select('-password').lean();
-//         if (!docData.available) {
-//             return res.status(400).json({ success: false, message: 'Doctor is not available' });
-//         }
-
-//         const slots_booked = docData.slots_booked || {};
-
-//         if (slots_booked[slotDate]) {
-//             if (slots_booked[slotDate].includes(slotTime)) {
-//                 return res.status(400).json({ success: false, message: 'Slot is already booked' });
-//             }
-//             slots_booked[slotDate].push(slotTime);
-//         } else {
-//             slots_booked[slotDate] = [slotTime];
-//         }
-
-//         const userData = await userModel.findById(userId).select('-password');
-
-//         const appointmentData = {
-//             userId,
-//             docId,
-//             userData,
-//             docData,
-//             slotDate,
-//             slotTime,
-//             amount: docData.fees,
-//             date: Date.now(),
-//         };
-
-//         const newAppointment = new appointmentModel(appointmentData);
-//         await newAppointment.save();
-
-//         await doctorModel.findByIdAndUpdate(docId, { slots_booked });
-
-//         return res.status(201).json({ success: true, message: 'Appointment booked successfully' });
-
+//         const {userId} = req.user._id; // Get userId from the request
+//         const appointments = await appointmentModel.find({ userId })
+//         res.json({ success: true, appointments });
 //     } catch (error) {
-//         console.error('Error booking appointment:', error);
-//         return res.status(500).json({ success: false, message: error.message });
+//         console.log(error);
+//         return res.status(500).json({ success: false, message: "Internal server error" });
 //     }
 // };
 
-// const getProfile = async(req,res)=>{
-// try {
-     
-//     const {userId} = req.body 
 
-//     // user give the token  by using token we get user ID 
-//     // const token = req.header('Authorization').replace('Bearer ', '');
-//     const userData = await userModel.findById(userId).select('-password')
-//     res.json({success:true,userData})
-     
+const listAppointments = async (req, res) => {
+  try {
+    console.log("User from token:", req.user); // should now print user object
 
-// } catch (error) {
-//     console.log(error);
+    const userId = req.userId; // ✅ this should work now
+    const appointments = await appointmentModel.find({ userId });
+
+    res.json({ success: true, appointments });
+  } catch (error) {
+    console.log("Error in listAppointments:", error);
+    return res.status(500).json({ success: false, message: "Internal server error" });
+  }
+};
+
+
+// api to cancel appointment 
+
+// const cancelAppointment = async (req, res) => {
+//   try {
+//     const {userId, appointmentId } = req.body; // Get appointmentId from the request body
+
+//     // Find and delete the appointment
+//     const appointmentData = await appointmentModel.findByIdAndDelete(appointmentId);
+
+//     if (appointmentData.userId!== userId) {
+//       return res.status(404).json({ success: false, message: "Appointment not found" });
+//     }
+//   await appointmentModel.findByIdAndUpdate(appointmentId,{cancelled:true});
+//   const { docId, slotDate, slotTime } = appointmentData;
+//     const doctorData = await doctorModel.findById(docId);
+
+//     const slots_booked = doctorData.slots_booked ;
+//     // Remove the slot from the doctor's booked slots
+
+//     slots_booked[slotDate] = slots_booked[slotDate].filter(e=>e!==slotTime);
+    
+//     await doctorModel.findByIdAndUpdate(docId, { slots_booked });
+//     // Initialize if not present
+//     res.json({ success: true, message: "Appointment cancelled successfully" });
+//     // if (slots_booked[slotDate]) {
+//     //   const index = slots_booked[slotDate].indexOf(slotTime);
+//     //   if (index > -1) {
+//     //     slots_booked[slotDate].splice(index, 1); // Remove the slot
+//     //   }
+//     // }
+//   } catch (error) {
+//     console.log("Error in cancelAppointment:", error);
 //     return res.status(500).json({ success: false, message: "Internal server error" });
+//   }
 // }
-// }
+const cancelAppointment = async (req, res) => {
+  try {
+    const { appointmentId } = req.body;
+    const userId = req.userId; 
 
-export { registerUser,loginUser ,getProfile,updateProfile, bookAppointment};
+    // console.log("User from token:", userId); 
+
+    const appointmentData = await appointmentModel.findByIdAndDelete(appointmentId);
+
+    if (!appointmentData) {
+      return res.status(404).json({ success: false, message: "Appointment not found" });
+    }
+
+    if (appointmentData.userId !== userId) {
+      return res.status(403).json({ success: false, message: "Unauthorized" });
+    }
+
+    // ✅ Soft delete
+    await appointmentModel.findByIdAndUpdate(appointmentId, { cancelled: true });
+
+    const { docId, slotDate, slotTime } = appointmentData;
+    const doctorData = await doctorModel.findById(docId);
+
+    if (doctorData && doctorData.slots_booked?.[slotDate]) {
+      doctorData.slots_booked[slotDate] = doctorData.slots_booked[slotDate].filter(slot => slot !== slotTime);
+      await doctorModel.findByIdAndUpdate(docId, { slots_booked: doctorData.slots_booked });
+    }
+
+    return res.json({ success: true, message: "Appointment cancelled successfully" });
+
+  } catch (error) {
+    console.log("Error in cancelAppointment:", error);
+    return res.status(500).json({ success: false, message: "Internal server error" });
+  }
+};
+
+
+
+export { registerUser,loginUser ,getProfile,updateProfile, bookAppointment,listAppointments,cancelAppointment};

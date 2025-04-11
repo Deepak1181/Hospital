@@ -5,6 +5,7 @@ import bcrypt from "bcrypt";
 import { v2 as cloudinary } from "cloudinary";
 import doctorModel from "../models/doctorModel.js";
 import jwt from "jsonwebtoken"
+import appointmentModel from "../models/appointmentModel.js";
 const addDoctor = async (req, res) => {
     try {
         // Trim keys to remove extra spaces
@@ -112,7 +113,7 @@ const loginAdmin = async (req, res) => {
             const token = jwt.sign(
                 { email: process.env.ADMIN_EMAIL }, 
                 process.env.JWT_SECRET, 
-                {expiresIn:"1d"}
+              
               
             );
 
@@ -142,4 +143,56 @@ const allDoctors = async (req, res) => {
 };
 
 
-export { addDoctor,loginAdmin ,allDoctors};
+
+
+//  Api to get all appointments list 
+ const appointmentsAdmin = async(req,res)=>{
+    try{
+
+        const appointments = await appointmentModel.find({})
+        res.json({success:true,appointments})
+    }
+    catch(error){
+        console.log(error)
+        res.json({success:false,message:error.message})
+    }   
+    }
+
+
+
+
+
+    // appointment cancel
+
+
+    const appointmentCancel = async (req, res) => {
+      try {
+        const { appointmentId } = req.body;
+        // const userId = req.userId; 
+    
+        // console.log("User from token:", userId); 
+    
+        const appointmentData = await appointmentModel.findByIdAndDelete(appointmentId);
+    
+       
+    
+        // ✅ Soft delete
+        await appointmentModel.findByIdAndUpdate(appointmentId, { cancelled: true });
+    
+        const { docId, slotDate, slotTime } = appointmentData;
+        const doctorData = await doctorModel.findById(docId);
+    
+        if (doctorData && doctorData.slots_booked?.[slotDate]) {
+          doctorData.slots_booked[slotDate] = doctorData.slots_booked[slotDate].filter(slot => slot !== slotTime);
+          await doctorModel.findByIdAndUpdate(docId, { slots_booked: doctorData.slots_booked });
+        }
+    
+        return res.json({ success: true, message: "Appointment cancelled successfully" });
+    
+      } catch (error) {
+        console.log("Error in cancelAppointment:", error);
+        return res.status(500).json({ success: false, message: "Internal server error" });
+      }
+    };
+
+export { addDoctor,loginAdmin ,allDoctors, appointmentsAdmin, appointmentCancel};
