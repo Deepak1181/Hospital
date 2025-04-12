@@ -114,6 +114,7 @@ const AdminContextProvider = (props) => {
     const [aToken, setAToken] = useState(localStorage.getItem('aToken') || "");
     const [doctors, setDoctors] = useState([]);
     const [appointments, setAppointments] = useState([]);
+    const [dashData,setDashData] = useState(false)
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
     const setAuthToken = (token) => {
@@ -205,6 +206,27 @@ const AdminContextProvider = (props) => {
         toast.error(error.message)
      }
     }
+
+
+
+    const getDashData = async () => {
+        try {
+            const { data } = await axios.get(backendUrl + "/api/admin/dashboard", {
+                headers: { Authorization: aToken ? `Bearer ${aToken}` : "" },
+            });
+            if (data.success) {
+                setDashData(data.dashData);
+                toast.success(data.message);
+            }
+            else {
+                toast.error(data.message);
+            }
+        }
+        catch (error) {
+            console.error("Error fetching doctors:", error);
+            toast.error(error.response?.data?.message || error.message);
+        }
+    }
     const value = {
         aToken,
         setAToken: setAuthToken,
@@ -216,7 +238,10 @@ const AdminContextProvider = (props) => {
         appointments,
         setAppointments,
         logout,
-        cancelAppointement
+        cancelAppointement,
+        getDashData,
+        dashData,
+        setDashData 
     };
 
     return (
