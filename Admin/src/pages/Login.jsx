@@ -15,22 +15,23 @@ const Login = () => {
 
 
   const onSubmitHandler = async (e) => {
-    console.log("hello ")
+    // console.log("hello ")
     e.preventDefault();
-    console.log("Backend URL:", backendUrl);
-    
+    // console.log("Backend URL:", backendUrl);
+     const backendUrl = import.meta.env.VITE_BACKEND_URL
     try {
       if (state === "Admin") {
-      const { data } = await axios.post( 'http://localhost:4000/api/admin/login', {
+      const { data } = await axios.post( backendUrl + '/api/admin/login', {
         email,
         password,
       });
-         console.log('api is working')
+        //  console.log('api is working')
       if (data.success) {
         localStorage.setItem("token", data.token);
         setAToken(data.token);
         toast.success("Login Successful");
-        console.log("Login Successful: ", data.token);
+        window.location.href = "/admin-dashboard";
+        // console.log("Login Successful: ", data.token);
       } else {
         alert("")
         toast.error(data?.message || "Invalid email or password");
