@@ -57,4 +57,47 @@ const loginDoctor = async (req, res) => {
     }
 }
 
-export {changeAvailablity,doctorList,loginDoctor}
+
+//  all the appointement for specific doctor 
+
+
+// const appointementDoctor = async (req, res) => {
+//     try {
+//         const { docId } = req.body;
+//         console.log("Request Body:", req.body);
+//         const appointements = await doctorModel.findById({docId})
+//         console.log("Doctor ID:",docId );
+
+
+//         // if (!appointements) {
+//         //     return res.status(404).json({ success: false, message: "Doctor not found" });
+//         // }
+//         res.json({ success: true, appointements });
+//     } catch (error) {
+//         console.log(error);
+//         return res.status(500).json({ success: false, message: error.message });
+//     }
+// };
+
+
+const appointementDoctor = async (req, res) => {
+    try {
+        const { docId } = req.body;
+        console.log("Request Body:", req.body);
+        console.log("Doctor ID:", docId);
+
+        const appointements = await doctorModel.findById(docId);
+
+        // if (!appointements) {
+        //     return res.status(404).json({ success: false, message: "Doctor not found" });
+        // }
+
+        res.json({ success: true, appointements });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ success: false, message: error.message });
+    }
+};
+
+
+export {changeAvailablity,doctorList,loginDoctor,appointementDoctor}

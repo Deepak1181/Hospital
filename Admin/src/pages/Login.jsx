@@ -4,11 +4,13 @@ import axios from "axios";
 
 import { toast,ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { DoctorContext } from "../context/DoctorContext";
 const Login = () => {
   const [state, setState] = useState("Admin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { setAToken, backendUrl } = useContext(AdminContext);
+  const { setAToken,  backendUrl } = useContext(AdminContext);
+  const {setDToken} = useContext(DoctorContext)
 
 //   ADMIN_EMAIL="admin@gmail.com"
 //   ADMIN_PASSWORD="admin"
@@ -37,6 +39,24 @@ const Login = () => {
         toast.error(data?.message || "Invalid email or password");
         console.error("Login failed: ", data);
       }
+    }
+    else{
+      const { data } = await axios.post( backendUrl + '/api/doctor/login', {
+        email,
+        password,
+      }); 
+      if (data.success) {
+        localStorage.setItem("dtoken", data.token);
+        setDToken(data.token);
+        toast.success("Login Successful");
+        // window.location.href = "/doctor-dashboard";
+        // console.log("Login Successful: ", data.token);
+      } else {
+        alert("")
+        toast.error(data?.message || "Invalid email or password");
+        console.error("Login failed: ", data);
+      }
+
     }
     } catch (error) {
       console.error("Error during login:", error.response?.data || error.message);
