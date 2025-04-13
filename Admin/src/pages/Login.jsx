@@ -32,7 +32,7 @@ const Login = () => {
         localStorage.setItem("token", data.token);
         setAToken(data.token);
         toast.success("Login Successful");
-        window.location.href = "/admin-dashboard";
+        // window.location.href = "/admin-dashboard";
         // console.log("Login Successful: ", data.token);
       } else {
         alert("")
