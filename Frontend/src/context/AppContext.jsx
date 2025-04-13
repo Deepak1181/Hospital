@@ -4,6 +4,7 @@
 import { createContext, useEffect, useState } from "react";
 // import { doctors } from "../pres_Scripto/assets/assets_admin/assets";
 import axios from "axios"
+import { toast } from 'react-toastify'
 export const AppContext = createContext();
 
 const AppContextProvider = (props) => {
