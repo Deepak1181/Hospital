@@ -6,7 +6,7 @@ email = admin@gmail.com
 password = admin
 
 
-User Frontend [https://spontaneous-starship-a9d154.netlify.app/is ](https://spontaneous-starship-a9d154.netlify.app/)
+User Frontend [[https://spontaneous-starship-a9d154.netlify.app/is ](https://spontaneous-starship-a9d154.netlify.app/)](https://jolly-dragon-20b855.netlify.app/)
 email moni@gmail.com
 password 123456789
 
